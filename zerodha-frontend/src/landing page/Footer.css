@@ -1,0 +1,25 @@
+.col a{
+    margin-top: 00%;
+    color: black;
+}
+
+a:hover{
+    color: #387ed1;
+}
+
+h4{
+    margin-bottom: 10%;
+}
+.footer-links{
+    justify-content: center;
+    display: flex;
+    gap: 2%;
+    font-size: 90%;
+}
+
+p a{
+    color: black;
+}
+p a:hover{
+    color: #387ed1;
+}

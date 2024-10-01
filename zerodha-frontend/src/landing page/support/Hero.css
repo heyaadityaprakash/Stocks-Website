@@ -1,0 +1,25 @@
+#supportHero{
+    background-color: #387ed1;
+    color: white;
+}
+
+#supportWrapper{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap; /* Prevents items from wrapping to the next line */
+
+    margin: 0  100px;
+}
+
+#supportHero a{
+    color: white;
+    text-decoration: underline;
+}
+
+#supportHero input{
+    width: 100%;
+    padding: 20px;
+    border-radius: 2px;
+    border: none;
+}
+

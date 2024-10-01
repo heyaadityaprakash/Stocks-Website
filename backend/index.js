@@ -1,0 +1,107 @@
+const express=require("express")
+require('dotenv').config()
+
+const PORT=process.env.PORT || 4000
+const url=process.env.MONGO_URL
+const mongoose=require('mongoose')
+const cors=require('cors')
+const bodyParser=require('body-parser')
+
+
+const {holdingsModel}=require('./model/holdingsModel')
+const {positionModel}=require('./model/positionModel')
+const {ordersModel}=require('./model/ordersModel')
+
+const app=express()
+
+app.use(cors())
+app.use(bodyParser.json())
+//dummy route to add data
+
+// app.get('/addHoldings',async(req,res)=>{
+//     let tempHoldings=[{  name: "M&M",
+//         qty: 2,
+//         avg: 809.9,
+//         price: 779.8,
+//         net: "-3.72%",
+//         day: "-0.01%",
+//         isLoss: true}]
+
+//     tempHoldings.forEach((item)=>{
+//         let newHolding=new holdingsModel({
+//             name: item.name,
+//             qty: item.qty,
+//             avg: item.avg,
+//             price: item.price,
+//             net: item.net,
+//             day: item.day,
+//             isLoss:item.isLoss,
+//         })
+
+//         newHolding.save()
+
+//     })
+//     res.send("inserted the data")
+// })
+
+
+// app.get('/addPosition',async(req,res)=>{
+//     let tempPosition=[
+//         {
+//             product: "CNC",
+//             name: "JUBLFOOD",
+//             qty: 1,
+//             avg: 3124.75,
+//             price: 3082.65,
+//             net: "+10.04%",
+//             day: "-1.35%",
+//             isLoss: true,
+//         }
+//     ]
+
+//     tempPosition.forEach((item)=>{
+//         let newPosition=new positionModel({
+//             product: item.product,
+//             name: item.name,
+//             qty: item.qty,
+//             avg: item.avg,
+//             price: item.price,
+//             net: item.net,
+//             day: item.day,
+//             isLoss: item.isLoss,
+//         })
+
+//         newPosition.save()
+//     })
+//     res.send("inserted the positions")
+// })
+
+
+app.get('/allHoldings',async(req,res)=>{
+    let allHoldings=await holdingsModel.find({})    //fetch everything
+    res.json(allHoldings)
+})
+
+app.get('/allPosition',async(req,res)=>{
+    let allPosition=await positionModel.find({})   
+    res.json(allPosition)
+})
+
+app.post('/newOrder',async(req,res)=>{
+    let newOrder=new ordersModel({
+        name:req.body.name,
+        qty:req.body.qty,
+        price:req.body.price,
+        mode:req.body.mode,
+    })
+    newOrder.save()
+    res.send('order saved')
+})
+
+app.listen(PORT,()=>{
+    console.log("app started! ");
+    mongoose.connect(url)
+    console.log("connected to DB");
+    
+    
+})
